@@ -1,0 +1,41 @@
+<mat-toolbar class="toolbar">
+  <button mat-button routerLink="/"><mat-icon>navigate_before</mat-icon> Quit</button>
+  <button mat-icon-button (click)="togglePlayPause()">
+    <mat-icon>{{ (isTicking$ | async) ? 'pause' : 'play_arrow' }}</mat-icon>
+  </button>
+  <div class="progress">
+    <app-timeline></app-timeline>
+  </div>
+  <div class="actions">
+    <mat-button-toggle-group #handTool="matButtonToggleGroup" (click)="toggleHandTool(handTool.value)">
+      <mat-button-toggle value="LEFT" aria-label="Left Hand Tool">
+        <mat-icon color="accent" class="flip">pan_tool</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="RIGHT" checked aria-label="Right Hand Tool">
+        <mat-icon color="primary">pan_tool</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <button mat-button aria-label="Open config menu" (click)="menu.toggle()">{{ menu.expanded ? 'Close' : 'Open' }} Details</button>
+
+    <button mat-flat-button color="primary" (click)="handleMusicSave()">Save</button>
+  </div>
+</mat-toolbar>
+
+<mat-accordion>
+  <mat-expansion-panel #menu class="menu">
+    <section>
+      <app-music-meta-data></app-music-meta-data>
+    </section>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div class="content">
+  <div class="renderer">
+    <app-edit-renderer></app-edit-renderer>
+  </div>
+
+  <div class="keyboard">
+    <app-keyboard></app-keyboard>
+  </div>
+</div>

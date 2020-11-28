@@ -1,0 +1,52 @@
+<div class="sectionContainer">
+  <section class="section">
+    <h1 class="section__title">Learn</h1>
+    <div class="section__content">
+      <button mat-stroked-button class="button" routerLink="musics">
+        <mat-icon>music_note</mat-icon>
+        <div>Music list</div>
+      </button>
+      <button mat-stroked-button class="button" disabled>
+        <mat-icon>model_training</mat-icon>
+        <div>Exercices</div>
+      </button>
+      <button mat-stroked-button class="button" disabled>
+        <mat-icon>insert_drive_file</mat-icon>
+        <div>Scales</div>
+      </button>
+    </div>
+  </section>
+
+  <section class="section">
+    <h1 class="section__title">My Space</h1>
+    <div class="section__content">
+      <button mat-stroked-button class="button" routerLink="profile">
+        <mat-icon>face</mat-icon>
+        <div>Profile</div>
+      </button>
+      <button mat-stroked-button class="button" routerLink="profile/musics">
+        <mat-icon>music_note</mat-icon>
+        <div>Music Scores</div>
+      </button>
+      <button mat-stroked-button class="button" disabled>
+        <mat-icon>bar_chart</mat-icon>
+        <div>Statistics</div>
+      </button>
+    </div>
+  </section>
+</div>
+
+<section class="section">
+  <h1 class="section__title">Creation</h1>
+  <div class="section__content">
+    <button mat-stroked-button class="button" (click)="uploader.click()">
+      <mat-icon>note_add</mat-icon>
+      <div>Create from MIDI</div>
+      <input hidden type="file" #uploader (change)="uploadFile($event)" accept="audio/midi" />
+    </button>
+    <button mat-stroked-button class="button" disabled>
+      <mat-icon>fiber_manual_record</mat-icon>
+      <div>Record</div>
+    </button>
+  </div>
+</section>

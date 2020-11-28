@@ -1,0 +1,8 @@
+<div class="keyboard">
+  <canvas #blackKeys style="position: absolute"></canvas>
+  <canvas #whiteKeys style="position: absolute"></canvas>
+
+  <div class="instructions" *ngIf="(keyboardService.isKeyboardConnected$ | async) === false">
+    <h1>Plug your keyboard</h1>
+  </div>
+</div>

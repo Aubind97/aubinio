@@ -1,0 +1,5 @@
+# Ignore folders
+build
+coverage
+e2e
+node_modules

@@ -1,0 +1,25 @@
+$toolbarHeight: 64px
+
+.toolbar
+  display: flex
+  column-gap: var(--spacer-xl)
+  justify-content: space-between
+
+.progress
+  flex: 1
+  height: var(--spacer-m)
+
+.actions
+  display: flex
+  column-gap: var(--spacer-m)
+
+.content
+  display: flex
+  flex-direction: column
+  height: 100%
+
+  .renderer
+    height: calc(100% - var(--keyboard-height) - #{$toolbarHeight})
+
+  .keyboard
+    height: var(--keyboard-height)

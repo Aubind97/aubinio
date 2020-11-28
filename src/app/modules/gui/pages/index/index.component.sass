@@ -1,0 +1,35 @@
+$cardWidth: 128px
+
+.sectionContainer
+  display: flex
+  align-items: flex-start
+  margin: var(--spacer-xl) 0
+  column-gap: var(--spacer-xl)
+
+  .section
+    flex: 1
+    margin: 0
+
+.section
+  margin: var(--spacer-xl) 0
+  &:first-child
+    margin-top: 0
+
+  &__title
+    font-weight: bold
+    border-bottom: 2px solid var(--off)
+    padding-bottom: var(--spacer-m)
+    margin-bottom: var(--spacer-m)
+
+  &__content
+    display: flex
+    flex-wrap: wrap
+    gap: var(--spacer-m)
+
+.button
+  display: inline-flex
+  width: $cardWidth
+  height: $cardWidth
+  justify-content: center
+  align-items: center
+  flex-direction: column

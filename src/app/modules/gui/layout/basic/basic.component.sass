@@ -1,0 +1,37 @@
+.toolbar
+  display: flex
+  justify-content: space-between
+  padding: 0 var(--spacer-xl)
+
+  .logo
+    display: inline-flex
+    align-items: center
+    cursor: pointer
+
+  .user
+    display: inline-flex
+    column-gap: var(--spacer-m)
+    margin-right: var(--spacer-m)
+    font-size: var(--font-paragraph-m)
+
+    .name
+      display: inline-block
+
+    .photo
+      display: inline-block
+      height: var(--spacer-l)
+      width: var(--spacer-l)
+      border-radius: 50%
+      overflow: hidden
+
+      img
+        height: 100%
+
+.container
+  padding: var(--spacer-xl)
+  height: calc( 100% - var(--spacer-xl))
+  overflow-y: auto
+
+  .version
+    color: var(--off)
+    text-align: center

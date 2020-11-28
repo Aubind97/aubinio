@@ -1,0 +1,39 @@
+$toolbarHeight: 64px
+
+.toolbar
+  display: flex
+  column-gap: var(--spacer-xl)
+  justify-content: space-between
+
+.progress
+  flex: 1
+  height: var(--spacer-m)
+
+.actions
+  display: flex
+  column-gap: var(--spacer-m)
+
+.menu
+  position: absolute
+  top: $toolbarHeight
+  width: 100%
+  border-top-left-radius: 0 !important
+  border-top-right-radius: 0 !important
+  z-index: 100
+
+  section
+    margin: var(--spacer-xl) calc(var(--spacer-xl) - 24px) calc(var(--spacer-xl) - 16px) calc(var(--spacer-xl) - 24px)
+
+.content
+  display: flex
+  flex-direction: column
+  height: 100%
+
+  .renderer
+    height: calc(100% - var(--keyboard-height) - #{$toolbarHeight})
+
+  .keyboard
+    height: var(--keyboard-height)
+
+.flip
+  transform: scale(-1, 1)

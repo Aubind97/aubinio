@@ -1,0 +1,18 @@
+{
+  "targets": {
+    "prod-midiano": {
+      "hosting": {
+        "prod-midiano": [
+          "prod-midiano"
+        ]
+      }
+    },
+    "dev-midiano": {
+      "hosting": {
+        "dev-midiano": [
+          "dev-midiano"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "npmScope": "midiano",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.base.json": "*",
+    ".eslintrc.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "midiano": {
+      "tags": []
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ]
+      }
+    }
+  }
+}

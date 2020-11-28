@@ -1,0 +1,22 @@
+<mat-toolbar class="toolbar">
+  <div class="logo">
+    <mat-icon>audiotrack</mat-icon>
+    <h1 routerLink="/">Midiano</h1>
+  </div>
+  <div class="actions">
+    <div class="user" *ngIf="user$ | async; let user">
+      <div class="name">
+        Hello, <strong>{{ user.displayName }}</strong>
+      </div>
+      <div class="photo">
+        <img src="{{ user.photoURL }}" alt="{{ user.displayName }} Avatar" />
+      </div>
+    </div>
+    <button mat-icon-button (click)="loggout()"><mat-icon>power_settings_new</mat-icon></button>
+  </div>
+</mat-toolbar>
+
+<div class="container">
+  <router-outlet></router-outlet>
+  <p class="version">© Midiano 2020 - {{currentYear}} | v{{version}}</p>
+</div>

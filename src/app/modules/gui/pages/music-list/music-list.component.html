@@ -1,0 +1,18 @@
+<h1>List of musics</h1>
+<mat-card *ngFor="let music of musicList$ | async" class="item" (click)="loadFullTrack(music)">
+  <div class="track">
+    <mat-icon mat-list-icon>audiotrack</mat-icon>
+    <div class="details">
+      <div>{{ music.title }}</div>
+      <div>Compositor: {{ music.compositor }}</div>
+    </div>
+  </div>
+  <div class="creator">
+    <div class="name">
+      created by, <strong>{{ music.author.displayName }}</strong>
+    </div>
+    <div class="photo">
+      <img src="{{ music.author.photoURL }}" alt="{{ music.author.displayName }} Avatar" />
+    </div>
+  </div>
+</mat-card>

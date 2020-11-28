@@ -1,0 +1,67 @@
+<h2 class="title">Music Details</h2>
+<div class="container">
+  <section>
+    <h3>Tools</h3>
+    <div class="optionContainer">
+      <label>Select the note to roughly determine right and left hand note</label>
+      <p>
+        Every note lowest that the selected one will be defined as left note and the other as right one <br />
+        <i>⚠️ It will override every configuration</i>
+      </p>
+      <div class="sliderContainer">
+        <mat-slider
+          thumbLabel
+          color="primary"
+          class="slider"
+          [(value)]="noteThreshold"
+          [displayWith]="formatLabel.bind(this)"
+          [min]="minNoteCode"
+          [max]="maxNoteCode"
+        ></mat-slider>
+        <button mat-flat-button color="primary" (click)="setHandsValues()">Define this note as the theshold</button>
+      </div>
+    </div>
+    <div class="optionContainer" *ngIf="availableTracks$ | async as availableTracks">
+      <label>Selected tracks</label>
+      <p>Every selected tracks will be associated to the hand</p>
+      <ul class="trackSelector">
+        <li *ngFor="let track of availableTracks; let idx = index">
+          <mat-button-toggle-group #handTool="matButtonToggleGroup" [value]="isSelectedTrack$(track.id) | async">
+            <mat-button-toggle value="LEFT" aria-label="Left Hand Tool" (click)="selectTrack(track.id, 'LEFT')">
+              <mat-icon color="accent" class="flip">pan_tool</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle value="RIGHT" aria-label="Right Hand Tool" (click)="selectTrack(track.id, 'RIGHT')">
+              <mat-icon color="primary">pan_tool</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle value="NONE" aria-label="Unselect the track" (click)="unselectTrack(track.id)">
+              <mat-icon color="warn">cancel</mat-icon>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+          Track {{ idx + 1 }} ({{ track.notes.length }} notes)
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section *ngIf="musicMeta$ | async; let meta">
+    <h3>Details</h3>
+    <mat-form-field class="field">
+      <mat-label>Music Title</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Moonlight' Sonata, Clair de Lune, ..."
+        [value]="meta.title"
+        (blur)="handleMetaDataUpdate($event, 'title')"
+      />
+    </mat-form-field>
+    <mat-form-field class="field">
+      <mat-label>Music Author</mat-label>
+      <input
+        matInput
+        placeholder="Ex. Beethoven, Debussy, ..."
+        [value]="meta.compositor"
+        (blur)="handleMetaDataUpdate($event, 'compositor')"
+      />
+    </mat-form-field>
+  </section>
+</div>

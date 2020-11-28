@@ -1,0 +1,15 @@
+<h1>List of created musics</h1>
+<mat-card *ngFor="let music of musicList$ | async" class="item">
+  <div class="track">
+    <mat-icon mat-list-icon>audiotrack</mat-icon>
+    <div class="details">
+      <div>{{ music.title }}</div>
+      <div>Compositor: {{ music.compositor }}</div>
+    </div>
+  </div>
+  <div class="actions">
+    <button mat-icon-button (click)="toggleAccess(music)"><mat-icon>{{music.isPublic ? 'lock_open' : 'lock'}}</mat-icon></button>
+    <button mat-icon-button (click)="loadFullTrack(music)"><mat-icon>edit</mat-icon></button>
+    <button mat-icon-button (click)="delete(music)"><mat-icon>delete</mat-icon></button>
+  </div>
+</mat-card>
