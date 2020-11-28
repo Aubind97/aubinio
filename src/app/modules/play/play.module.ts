@@ -11,7 +11,6 @@ import { KeyboardModule } from '../keyboard/keyboard.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
-
 @NgModule({
   declarations: [IndexComponent, PlayRendererComponent],
   imports: [
@@ -24,7 +23,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatButtonToggleModule
-  ]
+    MatButtonToggleModule,
+  ],
 })
-export class PlayModule { }
+export class PlayModule {}

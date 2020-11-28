@@ -4,6 +4,7 @@ import { map, pluck } from 'rxjs/operators';
 import { Hand, MusicScoreDetails } from 'src/app/core/models/global';
 import { guessKeyCode } from 'src/app/core/utils/music.utils';
 import { KeyboardService } from 'src/app/modules/keyboard/service/keyboard.service';
+// eslint-disable-next-line unused-imports/no-unused-imports-ts
 import { MatSliderChange } from '@angular/material/slider';
 import { CoreMusicService } from 'src/app/core/services/core-music.service';
 import { DataMusicService } from 'src/app/core/services/data-music.service';

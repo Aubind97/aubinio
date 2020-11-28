@@ -112,7 +112,7 @@ export class DatabaseMusicService {
    * Get the music list of a user
    */
   getAllOf$(userId: string): AngularFirestoreCollection<MusicScoreDetails> {
-    return this.afStore.collection(`users/${userId}/musicScores`, (ref => ref.orderBy('title', 'asc')));
+    return this.afStore.collection(`users/${userId}/musicScores`, (ref) => ref.orderBy('title', 'asc'));
   }
 
   /**

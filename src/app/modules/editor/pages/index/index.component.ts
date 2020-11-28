@@ -5,7 +5,7 @@ import { EditorService } from '../../services/editor.service';
 import { CoreMusicService } from 'src/app/core/services/core-music.service';
 import { DatabaseMusicService } from 'src/app/core/services/database-music.service';
 import { PlayerMusicService } from 'src/app/core/services/player-music.service';
-import { takeUntil, tap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({

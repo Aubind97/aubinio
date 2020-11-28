@@ -1,16 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Application, Container, Graphics, Text } from 'pixi.js';
 import { fromEvent, merge, Subject, defer, Observable } from 'rxjs';
-import {
-  map,
-  takeUntil,
-  tap,
-  timeoutWith,
-  bufferCount,
-  throttleTime,
-  withLatestFrom,
-  debounceTime,
-} from 'rxjs/operators';
+import { map, takeUntil, tap, timeoutWith, bufferCount, throttleTime, withLatestFrom, debounceTime } from 'rxjs/operators';
 import { GraphicsMusicScoreNote, MusicScoreNote } from 'src/app/core/models/global';
 import { CoreMusicService } from '../../../../core/services/core-music.service';
 import { DataMusicService } from '../../../../core/services/data-music.service';

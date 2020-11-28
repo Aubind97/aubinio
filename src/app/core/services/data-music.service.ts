@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Hand, MusicScoreDetails, MusicScoreNote, SelectedTrack } from './../models/global';
+import { Hand, MusicScoreDetails, MusicScoreNote } from './../models/global';
 import { defaultHand, MidiLoaderService } from './midi-loader.service';
 import { CoreMusicService } from './core-music.service';
 
@@ -47,17 +47,19 @@ export class DataMusicService {
    */
   selectHandForTrackTrack(id: string, hand: Hand = defaultHand): void {
     const music = this.coreMusicService.music$.getValue();
-    const findedTrack = music.selectedTracks.find(track => track.id === id);
+    const findedTrack = music.selectedTracks.find((track) => track.id === id);
     const updateNoteHand = (tId: string, h: Hand) => {
-      music.availableTracks.find(track => track.id === tId)?.notes.forEach(note => {
-        note.hand = h;
-      });
+      music.availableTracks
+        .find((track) => track.id === tId)
+        ?.notes.forEach((note) => {
+          note.hand = h;
+        });
     };
 
     if (!findedTrack) {
       // Track note already selected
       updateNoteHand(id, hand);
-      music.selectedTracks.push({id, hand});
+      music.selectedTracks.push({ id, hand });
     } else if (findedTrack.hand !== hand) {
       // Track already selcted but with an other hand
       updateNoteHand(id, hand);
@@ -72,7 +74,7 @@ export class DataMusicService {
    */
   unselectTrack(id: string): void {
     const music = this.coreMusicService.music$.getValue();
-    const findedTrackIndex = music.selectedTracks.findIndex(track => track.id === id);
+    const findedTrackIndex = music.selectedTracks.findIndex((track) => track.id === id);
 
     if (findedTrackIndex !== -1) {
       music.selectedTracks.splice(findedTrackIndex, 1);

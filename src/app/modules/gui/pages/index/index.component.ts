@@ -8,7 +8,7 @@ import { CoreMusicService } from 'src/app/core/services/core-music.service';
   styleUrls: ['./index.component.sass'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IndexComponent{
+export class IndexComponent {
   constructor(private router: Router, private coreMusicService: CoreMusicService) {}
 
   public uploadFile($event) {

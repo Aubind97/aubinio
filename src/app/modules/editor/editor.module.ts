@@ -39,3 +39,5 @@ import { EditRendererComponent } from './component/edit-renderer/edit-renderer.c
   ],
 })
 export class EditorModule {}
+
+const test = '';

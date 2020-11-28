@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Pitch } from 'src/app/core/models/global';
 import { guessKeyCode, OCTAVE, isBlack } from 'src/app/core/utils/music.utils';
 import { CSSVar } from 'src/app/core/utils/global.utils';
-import { filter, map, scan, shareReplay, startWith, tap } from 'rxjs/operators';
+import { map, scan, shareReplay, startWith } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',

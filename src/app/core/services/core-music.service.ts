@@ -133,7 +133,7 @@ export class CoreMusicService {
         return notes;
       }),
       distinctUntilChanged((notesBefore, notesAfter) => JSON.stringify(notesBefore) === JSON.stringify(notesAfter)),
-      share(),
+      share()
     );
   }
 

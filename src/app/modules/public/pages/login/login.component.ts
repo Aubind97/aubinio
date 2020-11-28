@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}

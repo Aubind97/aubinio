@@ -59,8 +59,8 @@ export class PlayRendererComponent implements OnInit, OnDestroy {
       // Add the renderer to the DOM
       rendererElt.appendChild(this.renderer.view);
 
-            // Draw the background
-            this.drawBackground(this.backgroundContainer);
+      // Draw the background
+      this.drawBackground(this.backgroundContainer);
 
       // Init graphical pool
       this.allocateNewGraphics(this.initialGraphicsPoolSize);

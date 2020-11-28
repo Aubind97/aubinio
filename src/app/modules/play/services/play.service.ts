@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { filter, map, mapTo, shareReplay, startWith, switchMapTo, takeWhile, tap } from 'rxjs/operators';
+import { filter, map, startWith, tap } from 'rxjs/operators';
 import { Hand, MusicScoreNote } from 'src/app/core/models/global';
 import { CoreMusicService } from 'src/app/core/services/core-music.service';
 import { KeyboardService } from '../../keyboard/service/keyboard.service';

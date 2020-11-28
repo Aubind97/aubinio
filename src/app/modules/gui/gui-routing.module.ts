@@ -11,7 +11,7 @@ import { MusicListComponent as MusicList } from './pages/music-list/music-list.c
 
 const guiRoutes = [
   { path: '', component: Index },
-  { path: 'musics', component: MusicList }
+  { path: 'musics', component: MusicList },
 ];
 
 const profileRoutes = {
@@ -27,10 +27,7 @@ const routes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     component: BasicLayoutComponent,
-    children: [
-      ...guiRoutes,
-      profileRoutes
-    ],
+    children: [...guiRoutes, profileRoutes],
   },
 ];
 
