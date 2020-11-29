@@ -1,0 +1,6 @@
+<div class="container">
+  <div #range class="range">
+    <div #handle class="handle" cdkDragBoundary=".range" cdkDrag (cdkDragEnded)="handlePositionMove($event)" [cdkDragFreeDragPosition]="handlePosition"></div>
+  </div>
+  <canvas #progress></canvas>
+</div>

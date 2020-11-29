@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from 'src/app/shared/shared.module';
 
 import { EditorRoutingModule } from './editor-routing.module';
 import { KeyboardModule } from '../keyboard/keyboard.module';
@@ -18,12 +17,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EditRendererComponent } from './component/edit-renderer/edit-renderer.component';
+import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   declarations: [IndexComponent, MusicMetaDataComponent, EditRendererComponent],
   imports: [
     CommonModule,
-    SharedModule,
+    CoreModule,
     KeyboardModule,
     EditorRoutingModule,
 
@@ -39,5 +39,3 @@ import { EditRendererComponent } from './component/edit-renderer/edit-renderer.c
   ],
 })
 export class EditorModule {}
-
-const test = '';

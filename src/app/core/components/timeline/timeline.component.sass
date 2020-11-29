@@ -1,0 +1,22 @@
+.container
+  position: relative
+  width: 100%
+  height: var(--spacer-m)
+  border-radius: var(--spacer-xs)
+  overflow: hidden
+
+  .range
+    z-index: 100
+    position: absolute
+    height: 100%
+    width: 100%
+
+  .handle
+    z-index: 101
+    position: absolute
+    width: var(--spacer-s)
+    height: 100%
+    background-color: var(--primary)
+
+  canvas
+    position: absolute

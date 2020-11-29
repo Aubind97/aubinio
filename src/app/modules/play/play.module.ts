@@ -8,8 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { KeyboardModule } from '../keyboard/keyboard.module';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   declarations: [IndexComponent, PlayRendererComponent],
@@ -17,7 +17,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     CommonModule,
     PlayRoutingModule,
 
-    SharedModule,
+    CoreModule,
     KeyboardModule,
 
     MatToolbarModule,
