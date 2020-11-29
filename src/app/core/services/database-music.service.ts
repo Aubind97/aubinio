@@ -54,21 +54,30 @@ export class DatabaseMusicService {
             .snapshotChanges();
         }),
         finalize(async () => {
-          const url = await this.afStorage.ref(dataPath).getDownloadURL().toPromise();
+          let data;
 
-          // Create music meta
-          this.afStore.doc(`users/${user.uid}/musicScores/${id}`).set(
-            {
+          // If it's the creation
+          if (!meta.createdAt) {
+            data = {
+              ...meta,
               id,
-              url,
               author: user,
               isPublic: false,
-              createdAt: now,
               updatedAt: now,
+              createdAt: now,
+            };
+          } else {
+            data = {
               ...meta,
-            },
-            { merge: true }
-          );
+              updatedAt: now,
+            };
+          }
+
+          // Overrride URL if it's a modification
+          data.url = await this.afStorage.ref(dataPath).getDownloadURL().toPromise();
+
+          // Create music meta
+          this.afStore.doc(`users/${user.uid}/musicScores/${id}`).set(data, { merge: true });
         })
       )
       .subscribe();
