@@ -12,6 +12,8 @@
         <mat-icon color="primary">pan_tool</mat-icon>
       </mat-button-toggle>
     </mat-button-toggle-group>
+
+    <button mat-button (click)="changeSpeed()">Speed x{{ speedAvailables[currentSpeedIndex] }}</button>
   </div>
 </mat-toolbar>
 
