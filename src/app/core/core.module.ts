@@ -7,12 +7,14 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [TimelineComponent],
   imports: [
     CommonModule,
     DragDropModule,
+    MatProgressBarModule,
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,

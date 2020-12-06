@@ -1,6 +1,33 @@
 <div class="container">
   <div #range class="range">
-    <div #handle class="handle" cdkDragBoundary=".range" cdkDrag (cdkDragEnded)="handlePositionMove($event)" [cdkDragFreeDragPosition]="handlePosition"></div>
+    <!-- Min Range Handle -->
+    <div
+      #minHandle
+      class="handle minHandle"
+      cdkDragBoundary=".range"
+      cdkDrag
+      (cdkDragEnded)="handleMinPositionMove($event)"
+      [cdkDragFreeDragPosition]="handleMinPosition"
+    ></div>
+    <!-- Max Range Handle -->
+    <div
+      #maxHandle
+      class="handle maxHandle"
+      cdkDragBoundary=".range"
+      cdkDrag
+      (cdkDragEnded)="handleMaxPositionMove($event)"
+      [cdkDragFreeDragPosition]="handleMaxPosition"
+    ></div>
+    <!-- Current Position Handle -->
+    <div
+      #handle
+      class="handle"
+      cdkDragBoundary=".range"
+      cdkDrag
+      (cdkDragEnded)="handlePositionMove($event)"
+      [cdkDragFreeDragPosition]="handlePosition"
+    ></div>
   </div>
-  <canvas #progress></canvas>
+
+  <mat-progress-bar [value]="(progress$ | async) * 100" mode="determinate" color="accent" class="progress"></mat-progress-bar>
 </div>

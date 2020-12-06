@@ -40,7 +40,7 @@ export class CoreMusicService {
     startingTickAdjustment: 0,
     isTicking: false,
     tickDuration: 1,
-    clockRefreshRate: 16,
+    clockRefreshRate: 8,
     tickUpdatedAt: null,
     lastEmittedNoteIndexes: {},
   };
@@ -94,8 +94,8 @@ export class CoreMusicService {
     withLatestFrom(this.state$, (_, { tickUpdatedAt, tick, tickDuration, speed }) => ({ tickUpdatedAt, tick, tickDuration, speed })),
     tap(({ tickUpdatedAt, tick, tickDuration, speed }) => {
       const now = Date.now();
-      const elapsed = (now - (tickUpdatedAt ?? now) * speed) / 1000;
-      const elapsedTick = elapsed / tickDuration;
+      const elapsed = (now - (tickUpdatedAt ?? now)) / 1000;
+      const elapsedTick = (elapsed / tickDuration) * speed;
 
       this.commands$.next({ tick: tick + elapsedTick, tickUpdatedAt: now });
     }),
@@ -106,15 +106,22 @@ export class CoreMusicService {
   /**
    * Percentage of the musics between 0 and 1
    */
-  percentage$ = combineLatest([this.tick$, this.music$]).pipe(map(([tick, music]) => tick / music?.details.durationInTicks));
+  percentage$ = combineLatest([this.tick$, this.music$]).pipe(
+    map(([tick, music]) => tick / music?.details.durationInTicks),
+    shareReplay(1)
+  );
 
   /**
    * Emit all notes that pass tick + delay
    */
   notesFromCurrent$(delay: number): Observable<MusicScoreNote[]> {
     return combineLatest([this.tick$, this.music$]).pipe(
-      withLatestFrom(this.state$, ([tick, music], { lastEmittedNoteIndexes }) => ({ tick, music, lastEmittedNoteIndexes })),
-      map(({ tick, music, lastEmittedNoteIndexes }) => {
+      withLatestFrom(this.state$, ([_, music], { lastEmittedNoteIndexes, tick }) => ({
+        tick,
+        music,
+        lastEmittedNoteIndexes,
+      })),
+      map(({ music, lastEmittedNoteIndexes, tick }) => {
         const notes = [];
         let lastEmittedNoteIndex = lastEmittedNoteIndexes[delay] ?? 0;
 
@@ -208,6 +215,7 @@ export class CoreMusicService {
         tap(({ lastEmittedNoteIndexes }) => {
           // Note consider the delay to rerender note on the screen
           const index = this.music$.getValue()?.notes.findIndex((note) => note.tick + note.durationInTicks >= tick);
+          console.log('INDEX', index);
 
           Object.entries(lastEmittedNoteIndexes).forEach(([delay, _]) => {
             lastEmittedNoteIndexes[delay] = index;

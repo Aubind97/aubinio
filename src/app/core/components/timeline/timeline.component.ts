@@ -1,18 +1,8 @@
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil, tap, throttleTime } from 'rxjs/operators';
 import { CoreMusicService } from '../../services/core-music.service';
-import { CSSVar } from '../../utils/global.utils';
 
 @Component({
   selector: 'app-timeline',
@@ -21,18 +11,22 @@ import { CSSVar } from '../../utils/global.utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimelineComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('progress', { static: true }) barRef: ElementRef<HTMLCanvasElement>;
-  @ViewChild('handle', { static: true }) handleRef: ElementRef<HTMLDivElement>;
   @ViewChild('range', { static: true }) rangeRef: ElementRef<HTMLDivElement>;
+  @ViewChild('handle', { static: true }) handleRef: ElementRef<HTMLDivElement>;
+  @ViewChild('minHandle', { static: true }) minHandleRef: ElementRef<HTMLDivElement>;
+  @ViewChild('maxHandle', { static: true }) maxHandleRef: ElementRef<HTMLDivElement>;
 
   handlePosition = { x: 0, y: 0 };
+  handleMinPosition = { x: 0, y: 0 };
+  handleMaxPosition = { x: 0, y: 0 };
+  progress$ = this.coreMusicService.percentage$.pipe(throttleTime(120));
 
-  private context: CanvasRenderingContext2D;
-  private style: { backgroundColor: string; foregroundColor: string };
+  private range = { min: 0, max: 1 };
+  private handleHalfWidth = 4;
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private coreMusicService: CoreMusicService, private changeDetectorRef: ChangeDetectorRef) {}
+  constructor(private coreMusicService: CoreMusicService) {}
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -40,23 +34,30 @@ export class TimelineComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.context = this.barRef.nativeElement.getContext('2d');
-    this.loadStyle();
-
-    this.coreMusicService.percentage$
+    // Move the handle on each progress update
+    this.progress$
       .pipe(
         takeUntil(this.unsubscribe$),
-        throttleTime(200),
-        tap((percentage) => {
-          this.render(percentage);
+        tap((progress) => {
+          const width = this.rangeRef.nativeElement.getBoundingClientRect().width * progress;
+          this.handlePosition = { x: width, y: this.handlePosition.y };
+
+          // Handle range jump
+          if (progress >= this.range.max) {
+            this.coreMusicService.jumpToPercentage(this.range.min);
+            this.coreMusicService.start();
+          }
         })
       )
       .subscribe();
   }
 
   ngAfterViewInit(): void {
-    this.fitToParent(this.barRef.nativeElement);
-    this.render(0);
+    const rangeWidth = this.rangeRef.nativeElement.getBoundingClientRect().width;
+
+    // Set the range position to the min and max value
+    this.handleMinPosition.x = rangeWidth * this.range.min - this.handleHalfWidth;
+    this.handleMaxPosition.x = rangeWidth * this.range.max - this.handleHalfWidth;
   }
 
   /**
@@ -64,66 +65,46 @@ export class TimelineComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   handlePositionMove(evt: CdkDragEnd) {
     const range = this.rangeRef.nativeElement.getBoundingClientRect();
-    const percentage = (this.handlePosition.x + evt.distance.x) / range.width;
-    const clampedPercentage = percentage < 0 ? 0 : percentage > 1 ? 1 : percentage;
+    const xPosition = this.handlePosition.x + evt.distance.x;
+    const percentage = xPosition / range.width;
 
-    this.coreMusicService.jumpToPercentage(clampedPercentage);
+    const clampPercentage = percentage < this.range.min || percentage > this.range.max ? this.range.min : percentage;
+    this.coreMusicService.jumpToPercentage(clampPercentage);
   }
 
   /**
-   * Render the timeline
+   * Manage the manual minimum range handle move
    */
-  private render(percentage: number) {
-    this.drawBackground();
-    this.updateProgress(percentage);
+  handleMinPositionMove(evt: CdkDragEnd) {
+    const range = this.rangeRef.nativeElement.getBoundingClientRect();
+    const xPosition = this.handleMinPosition.x + evt.distance.x;
+    const percentage = xPosition / range.width;
+
+    this.handleMinPosition.x = xPosition;
+    this.range.min = percentage < 0 ? 0 : percentage > this.range.max ? this.range.max : percentage;
+
+    // Change the current position if the min handle is greater than the current position
+    if (this.handlePosition.x < this.handleMinPosition.x) {
+      this.handlePosition.x = this.handleMinPosition.x;
+      this.coreMusicService.jumpToPercentage(this.range.min);
+    }
   }
 
   /**
-   * Draw the progresstion of the music
+   * Manage the manual maximum range handle move
    */
-  private updateProgress(percentage: number): void {
-    const width = this.barRef.nativeElement.clientWidth * percentage;
+  handleMaxPositionMove(evt: CdkDragEnd) {
+    const range = this.rangeRef.nativeElement.getBoundingClientRect();
+    const xPosition = this.handleMaxPosition.x + evt.distance.x;
+    const percentage = xPosition / range.width;
 
-    this.context.save();
+    this.handleMaxPosition.x = xPosition;
+    this.range.max = percentage < this.range.min ? this.range.min : percentage > 1 ? 1 : percentage;
 
-    this.context.fillStyle = this.style.foregroundColor;
-    this.context.fillRect(0, 0, width, this.barRef.nativeElement.clientHeight);
-
-    this.context.restore();
-
-    this.handlePosition = { x: width - 4, y: this.handlePosition.y };
-    this.changeDetectorRef.detectChanges();
-  }
-
-  /**
-   * Draw the background
-   */
-  private drawBackground(): void {
-    this.context.save();
-
-    this.context.fillStyle = this.style.backgroundColor;
-    this.context.fillRect(0, 0, this.barRef.nativeElement.clientWidth, this.barRef.nativeElement.clientHeight);
-
-    this.context.restore();
-  }
-
-  /**
-   * Load a style from css varibles
-   */
-  private loadStyle(): void {
-    this.style = {
-      backgroundColor: CSSVar('background'),
-      foregroundColor: CSSVar('accent'),
-    };
-  }
-
-  /**
-   * Resize a canvas to his parent size
-   */
-  private fitToParent(canvas: HTMLCanvasElement): void {
-    const parentElt = canvas.parentElement;
-
-    canvas.height = parentElt.clientHeight;
-    canvas.width = parentElt.clientWidth;
+    // Change the current position if the max handle is lower than the current position
+    if (this.handlePosition.x > this.handleMaxPosition.x) {
+      this.handlePosition.x = this.handleMinPosition.x;
+      this.coreMusicService.jumpToPercentage(this.range.min);
+    }
   }
 }
