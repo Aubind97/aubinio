@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, NEVER, Observable, pipe, Subject, timer, UnaryFunction } from 'rxjs';
+import { BehaviorSubject, combineLatest, merge, NEVER, Observable, pipe, Subject, timer, UnaryFunction } from 'rxjs';
 import {
   distinctUntilChanged,
   first,
@@ -78,8 +78,7 @@ export class CoreMusicService {
   /**
    * Emit at all music tick
    */
-  tick$ = combineLatest([
-    this.jump$.pipe(startWith(0)),
+  private internalTick$ = combineLatest([
     this.clock$,
     this.music$.pipe(
       tap((music) => {
@@ -96,12 +95,20 @@ export class CoreMusicService {
       const now = Date.now();
       const elapsed = (now - (tickUpdatedAt ?? now)) / 1000;
       const elapsedTick = (elapsed / tickDuration) * speed;
+      const currentTick = tick + elapsedTick;
 
-      this.commands$.next({ tick: tick + elapsedTick, tickUpdatedAt: now });
+      this.commands$.next({ tick: currentTick, tickUpdatedAt: now });
     }),
-    pluck('tick'),
-    shareReplay(1)
-  ) as Observable<number>;
+    share()
+  );
+
+  /**
+   * Emit every it and re-emmit on each `jump` event
+   */
+  tick$ = merge(this.internalTick$, this.jump$).pipe(
+    startWith(this.DEFAULT_STATE.tick),
+    withLatestFrom(this.state$, (_, { tick }) => tick)
+  );
 
   /**
    * Percentage of the musics between 0 and 1
@@ -215,7 +222,6 @@ export class CoreMusicService {
         tap(({ lastEmittedNoteIndexes }) => {
           // Note consider the delay to rerender note on the screen
           const index = this.music$.getValue()?.notes.findIndex((note) => note.tick + note.durationInTicks >= tick);
-          console.log('INDEX', index);
 
           Object.entries(lastEmittedNoteIndexes).forEach(([delay, _]) => {
             lastEmittedNoteIndexes[delay] = index;
