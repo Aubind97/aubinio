@@ -37,7 +37,7 @@ export class IndexComponent implements OnInit, OnDestroy {
       .pipe(
         first(),
         tap((speed) => {
-          this.playerMusicService.setSpeed(speed);
+          this.playerMusicService.setSpeed(speed / 100);
         })
       )
       .subscribe();
