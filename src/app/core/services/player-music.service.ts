@@ -7,6 +7,7 @@ import { MusicScoreNote } from '../models/global';
 interface PlayerState {
   isOn: boolean;
   volume: number;
+  speed: number;
 }
 
 @Injectable({
@@ -17,6 +18,7 @@ export class PlayerMusicService {
   private readonly DEFAULT_STATE: PlayerState = {
     isOn: false,
     volume: 1,
+    speed: 1,
   };
 
   private command$ = new Subject<Partial<PlayerState>>();
@@ -39,7 +41,7 @@ export class PlayerMusicService {
             notes.forEach((note) => {
               output.playNote(note.keyCode, 1, {
                 velocity: note.velocity * state.volume,
-                duration: note.durationInTicks,
+                duration: note.durationInTicks / state.speed,
               });
             });
           }
@@ -59,5 +61,9 @@ export class PlayerMusicService {
 
   setVolume(volume: number): void {
     this.command$.next({ volume });
+  }
+
+  setSpeed(speed: number): void {
+    this.command$.next({ speed });
   }
 }

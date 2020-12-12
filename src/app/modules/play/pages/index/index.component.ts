@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { first, map, takeUntil, tap } from 'rxjs/operators';
 import { Hand } from 'src/app/core/models/global';
 import { CoreMusicService } from 'src/app/core/services/core-music.service';
 import { PlayerMusicService } from 'src/app/core/services/player-music.service';
@@ -32,6 +32,16 @@ export class IndexComponent implements OnInit, OnDestroy {
 
     this.playerMusicService.player$(playedNotes$).pipe(takeUntil(this.unsubscribe$)).subscribe();
 
+    // Init the speed from the core music service
+    this.speed$
+      .pipe(
+        first(),
+        tap((speed) => {
+          this.playerMusicService.setSpeed(speed);
+        })
+      )
+      .subscribe();
+
     if (!!this.playedHands.length) {
       this.playerMusicService.start();
     }
@@ -55,6 +65,7 @@ export class IndexComponent implements OnInit, OnDestroy {
 
   handleSpeedChange(evt: MatSliderChange) {
     this.coreMusicService.setSpeed(evt.value / 100);
+    this.playerMusicService.setSpeed(evt.value / 100);
   }
 
   handleVolumeChange(evt: MatSliderChange) {
