@@ -10,6 +10,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { KeyboardModule } from '../keyboard/keyboard.module';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { CoreModule } from 'src/app/core/core.module';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [IndexComponent, PlayRendererComponent],
@@ -24,6 +26,8 @@ import { CoreModule } from 'src/app/core/core.module';
     MatButtonModule,
     MatIconModule,
     MatButtonToggleModule,
+    MatMenuModule,
+    MatSliderModule,
   ],
 })
 export class PlayModule {}

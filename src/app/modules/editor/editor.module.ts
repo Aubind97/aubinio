@@ -18,6 +18,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EditRendererComponent } from './component/edit-renderer/edit-renderer.component';
 import { CoreModule } from 'src/app/core/core.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [IndexComponent, MusicMetaDataComponent, EditRendererComponent],
@@ -36,6 +37,7 @@ import { CoreModule } from 'src/app/core/core.module';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
+    MatMenuModule,
   ],
 })
 export class EditorModule {}

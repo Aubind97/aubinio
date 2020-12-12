@@ -5,8 +5,9 @@ import { EditorService } from '../../services/editor.service';
 import { CoreMusicService } from 'src/app/core/services/core-music.service';
 import { DatabaseMusicService } from 'src/app/core/services/database-music.service';
 import { PlayerMusicService } from 'src/app/core/services/player-music.service';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { MatSliderChange } from '@angular/material/slider';
 
 @Component({
   selector: 'app-index',
@@ -18,6 +19,7 @@ export class IndexComponent implements OnInit, OnDestroy {
   @ViewChild('menu') menu: MatExpansionPanel;
 
   isTicking$ = this.coreMusicService.isTicking$;
+  volume$ = this.playerMusicService.volume$.pipe(map((v) => v * 100));
 
   private unsubscribe$ = new Subject<void>();
 
@@ -48,6 +50,10 @@ export class IndexComponent implements OnInit, OnDestroy {
 
   togglePlayPause(): void {
     this.coreMusicService.toggle();
+  }
+
+  handleVolumeChange(evt: MatSliderChange) {
+    this.playerMusicService.setVolume(evt.value / 100);
   }
 
   handleMusicSave() {

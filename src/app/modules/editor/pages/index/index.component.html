@@ -16,6 +16,13 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
 
+    <button mat-icon-button [matMenuTriggerFor]="volumeMenu"><mat-icon>volume_up</mat-icon></button>
+    <mat-menu #volumeMenu="matMenu">
+      <div class="sliderMenu">
+        <mat-slider max="100" min="0" step="10" vertical thumbLabel [value]="volume$ | async" (change)="handleVolumeChange($event)"> </mat-slider>
+      </div>
+    </mat-menu>
+
     <button mat-button aria-label="Open config menu" (click)="menu.toggle()">{{ menu.expanded ? 'Close' : 'Open' }} Details</button>
 
     <button mat-flat-button color="primary" (click)="handleMusicSave()">Save</button>

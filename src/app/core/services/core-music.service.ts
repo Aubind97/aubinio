@@ -61,6 +61,7 @@ export class CoreMusicService {
   private jump$ = new Subject<void>();
   private clockRefreshRate$: Observable<number> = this.state$.pipe(this.queryChange('clockRefreshRate'));
   isTicking$: Observable<number> = this.state$.pipe(this.queryChange('isTicking'));
+  speed$: Observable<number> = this.state$.pipe(this.queryChange('speed'));
 
   /**
    * Ticker clock

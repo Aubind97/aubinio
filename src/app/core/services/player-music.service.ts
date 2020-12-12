@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
-import { scan, share, shareReplay, startWith, tap } from 'rxjs/operators';
+import { pluck, scan, share, shareReplay, startWith, tap } from 'rxjs/operators';
 import webmidi from 'webmidi';
 import { MusicScoreNote } from '../models/global';
 
 interface PlayerState {
   isOn: boolean;
+  volume: number;
 }
 
 @Injectable({
@@ -15,6 +16,7 @@ interface PlayerState {
 export class PlayerMusicService {
   private readonly DEFAULT_STATE: PlayerState = {
     isOn: false,
+    volume: 1,
   };
 
   private command$ = new Subject<Partial<PlayerState>>();
@@ -25,6 +27,8 @@ export class PlayerMusicService {
     shareReplay(1)
   );
 
+  volume$ = this.state$.pipe(pluck('volume'));
+
   player$(notes$: Observable<MusicScoreNote[]>) {
     return combineLatest([notes$, this.state$]).pipe(
       tap(([notes, state]) => {
@@ -34,7 +38,7 @@ export class PlayerMusicService {
           if (output) {
             notes.forEach((note) => {
               output.playNote(note.keyCode, 1, {
-                velocity: note.velocity,
+                velocity: note.velocity * state.volume,
                 duration: note.durationInTicks,
               });
             });
@@ -51,5 +55,9 @@ export class PlayerMusicService {
 
   stop(): void {
     this.command$.next({ isOn: false });
+  }
+
+  setVolume(volume: number): void {
+    this.command$.next({ volume });
   }
 }

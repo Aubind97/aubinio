@@ -13,7 +13,28 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
 
-    <button mat-button (click)="changeSpeed()">Speed x{{ speedAvailables[currentSpeedIndex] }}</button>
+    <button mat-icon-button [matMenuTriggerFor]="speedMenu"><mat-icon>speed</mat-icon></button>
+    <mat-menu #speedMenu="matMenu">
+      <div class="sliderMenu">
+        <mat-slider max="100" min="10" step="10" vertical thumbLabel [value]="speed$ | async" (change)="handleSpeedChange($event)"> </mat-slider>
+      </div>
+    </mat-menu>
+
+    <mat-button-toggle-group [multiple]="true" [value]="playedHands">
+      <mat-button-toggle value="LEFT" aria-label="Learn left hand" (click)="togglePlayedHand('LEFT')">
+        <mat-icon color="accent" class="flip">pan_tool</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="RIGHT" aria-label="Learn right hand" (click)="togglePlayedHand('RIGHT')">
+        <mat-icon color="primary">pan_tool</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <button mat-icon-button [matMenuTriggerFor]="volumeMenu"><mat-icon>volume_up</mat-icon></button>
+    <mat-menu #volumeMenu="matMenu">
+      <div class="sliderMenu">
+        <mat-slider max="100" min="0" step="10" vertical thumbLabel [value]="volume$ | async" (change)="handleVolumeChange($event)"> </mat-slider>
+      </div>
+    </mat-menu>
   </div>
 </mat-toolbar>
 
