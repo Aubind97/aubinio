@@ -1,5 +1,14 @@
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil, tap, throttleTime } from 'rxjs/operators';
 import { CoreMusicService } from '../../services/core-music.service';
@@ -26,7 +35,7 @@ export class TimelineComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private coreMusicService: CoreMusicService) {}
+  constructor(private coreMusicService: CoreMusicService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -41,6 +50,7 @@ export class TimelineComponent implements OnInit, OnDestroy, AfterViewInit {
         tap((progress) => {
           const width = this.rangeRef.nativeElement.getBoundingClientRect().width * progress;
           this.handlePosition = { x: width, y: this.handlePosition.y };
+          this.changeDetector.detectChanges();
 
           // Handle range jump
           if (progress >= this.range.max) {
