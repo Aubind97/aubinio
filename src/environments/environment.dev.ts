@@ -5,12 +5,12 @@ export const environment = {
   production: true,
 
   firebaseConfig: {
-    apiKey: 'AIzaSyA0UDe6ckckiubxJOAgEqZhVY1eer6nza4',
-    authDomain: 'dev-midiano.firebaseapp.com',
-    databaseURL: 'https://dev-midiano.firebaseio.com',
-    projectId: 'dev-midiano',
-    storageBucket: 'dev-midiano.appspot.com',
-    messagingSenderId: '579813348058',
-    appId: '1:579813348058:web:79713b74f6c273c3a20be3',
+    apiKey: 'AIzaSyBQmqClmsPd_wxTSpV8kcqn-mcBw1HdK_k',
+    authDomain: 'dev-aubinio.firebaseapp.com',
+    databaseURL: 'https://dev-aubinio.firebaseio.com',
+    projectId: 'dev-aubinio',
+    storageBucket: 'dev-aubinio.appspot.com',
+    messagingSenderId: '237844938931',
+    appId: '1:237844938931:web:4d4c5d810f8d01521370c6'
   },
 };

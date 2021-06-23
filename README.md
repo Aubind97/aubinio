@@ -1,9 +1,8 @@
-# 🎹 Midiano
+# 🎹 Aubinio
 > Early stage of an app design to learn piano thanks to MIDI files
 
 ## Links
-Development website: https://dev-midiano.web.app/  
-Production website: https://prod-midiano.web.app/
+Development website: https://dev-aubinio.web.app/  
 
 ## Usage
 ```sh

@@ -1,8 +1,8 @@
-name: Deploy Dev
+name: Deploy
 
 on:
   push:
-    branches: [develop]
+    branches: [master]
 
 jobs:
   deploy:
@@ -27,11 +27,11 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build:dev
+        run: npm run build:prod
 
       - name: Deploy
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --non-interactive -P dev-midiano --only hosting:dev-midiano
+          args: deploy --non-interactive -P dev-aubinio --only hosting:dev-aubinio
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

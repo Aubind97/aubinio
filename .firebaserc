@@ -1,16 +1,9 @@
 {
   "targets": {
-    "prod-midiano": {
+    "dev-aubinio": {
       "hosting": {
-        "prod-midiano": [
-          "prod-midiano"
-        ]
-      }
-    },
-    "dev-midiano": {
-      "hosting": {
-        "dev-midiano": [
-          "dev-midiano"
+        "dev-aubinio": [
+          "dev-aubinio"
         ]
       }
     }
