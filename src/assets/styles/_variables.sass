@@ -2,27 +2,27 @@
 
 @include mat-core()
 
-$midiano-primary: mat-palette($mat-amber)
-$midiano-accent: mat-palette($mat-teal)
-$midiano-warn: mat-palette($mat-red)
+$aubinio-primary: mat-palette($mat-amber)
+$aubinio-accent: mat-palette($mat-teal)
+$aubinio-warn: mat-palette($mat-red)
 
-$midiano-theme: mat-dark-theme($midiano-primary, $midiano-accent, $midiano-warn)
+$aubinio-theme: mat-dark-theme($aubinio-primary, $aubinio-accent, $aubinio-warn)
 
-@include angular-material-theme($midiano-theme)
+@include angular-material-theme($aubinio-theme)
 
 // Theme
 :root
   // Colors
-  --off: #{mat-color(map-get($midiano-theme, background), app-bar)}
+  --off: #{mat-color(map-get($aubinio-theme, background), app-bar)}
   --off-light: rgba(255,255,255,0.4)
-  --background: #{mat-color(map-get($midiano-theme, background), background)}
+  --background: #{mat-color(map-get($aubinio-theme, background), background)}
   --foreground: #E1E1E1
 
-  --primary: #{mat-color($midiano-primary)}
-  --primary-alt: #{mat-color($midiano-primary, A400)}
+  --primary: #{mat-color($aubinio-primary)}
+  --primary-alt: #{mat-color($aubinio-primary, A400)}
 
-  --accent: #{mat-color($midiano-accent)}
-  --accent-alt: #{mat-color($midiano-accent, A400)}
+  --accent: #{mat-color($aubinio-accent)}
+  --accent-alt: #{mat-color($aubinio-accent, A400)}
 
   --spacer-xs: 4px
   --spacer-s: 8px

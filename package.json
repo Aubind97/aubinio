@@ -1,5 +1,5 @@
 {
-  "name": "midiano",
+  "name": "aubinio",
   "version": "0.3.0",
   "scripts": {
     "ng": "nx",
@@ -9,8 +9,7 @@
     "build": "ng build",
     "build:dev": "npm run build -- --configuration dev",
     "build:prod": "npm run build -- --configuration production",
-    "deploy:dev": "firebase deploy --non-interactive -P dev-midiano --only hosting:dev-midiano --token $FIREBASE_TOKEN",
-    "deploy:prod": "firebase deploy --non-interactive -P prod-midiano --only hosting:prod-midiano --token $FIREBASE_TOKEN",
+    "deploy:dev": "firebase deploy --non-interactive -P dev-aubinio --only hosting:dev-aubinio --token $FIREBASE_TOKEN",
     "test": "ng test",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
